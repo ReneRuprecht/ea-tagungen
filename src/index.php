@@ -20,7 +20,7 @@ $controller->createView();
 
 $events = new Events();
 
-$event = new Event('new1 1event name');
+$event = new Event('new2 1event name');
 $timeslot = new Timeslot('09:00', '09:10', 'slotname1');
 $speaker = new Speaker('', 'firstname', 'surname');
 $speaker2 = new Speaker('dr.2', 'firstname2', 'surname2');

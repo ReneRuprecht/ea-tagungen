@@ -10,26 +10,31 @@ class Event
         $this->eventDate = $eventDate;
     }
 
-    public function getEventDate()
+    public function getEventDate(): string
     {
         return $this->eventDate;
     }
 
-    public function addTimeSlotEntry($timeslot)
+    public function addTimeSlotEntry($timeslot): void
     {
         array_push($this->timeslots, $timeslot);
     }
 
-    public function buildTimeslotFromArray($timeslotArray)
+    public static function EventFromJson($eventJson): Event
     {
-        foreach ($timeslotArray as $timeslot) {
-            $createdTimeslot = new Timeslot($timeslot['startTime'], $timeslot['endTime'], $timeslot['eventName']);
-            $createdTimeslot->buildSpeakerFromArray($timeslot['speaker']);
-            $this->addTimeSlotEntry($createdTimeslot);
+
+        $event = new Event($eventJson['eventDate']);
+
+        $timeslots = $eventJson['timeslots'];
+
+        foreach ($timeslots as $timeslot) {
+            $createdTimeslot = Timeslot::TimeslotFromJson($timeslot);
+            $event->addTimeSlotEntry($createdTimeslot);
         }
+        return $event;
     }
 
-    public function toString()
+    public function toString(): string
     {
         $text = "<h1>" . $this->eventDate . "</h1>";
 
@@ -41,13 +46,13 @@ class Event
         return $text;
     }
 
-    public function toArray()
+    public function toJsonArray(): array
     {
 
         $timeslotArray = array();
         foreach ($this->timeslots as $timeslot) {
 
-            array_push($timeslotArray, $timeslot->toArray());
+            array_push($timeslotArray, $timeslot->toJsonArray());
         }
 
         $array = array(

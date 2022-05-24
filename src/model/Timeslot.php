@@ -13,29 +13,30 @@ class Timeslot
         $this->timeslotName = $timeslotName;
     }
 
-    public function setSpeakerArray($speaker)
-    {
-        $this->speaker = $speaker;
-    }
-
-    public function getSpeaker()
+    public function getAllSpeaker(): array
     {
         return $this->speaker;
     }
-    public function addSpeaker($speaker)
+    public function addSpeaker($speaker): void
     {
         array_push($this->speaker, $speaker);
     }
 
-    public function buildSpeakerFromArray($speakerArray)
+    public static function TimeslotFromJson($timeslotJson): Timeslot
     {
-        foreach ($speakerArray as $speaker) {
-            $createdSpeaker = new Speaker($speaker['title'], $speaker['firstname'], $speaker['surname']);
-            array_push($this->speaker, $createdSpeaker);
+        $timeslot =  new Timeslot($timeslotJson['startTime'], $timeslotJson['endTime'], $timeslotJson['eventName']);
+
+        $speakerJson = $timeslotJson['speaker'];
+
+        foreach ($speakerJson as $speaker) {
+            $createdSpeaker = Speaker::SpeakerFromJson($speaker);
+            $timeslot->addSpeaker($createdSpeaker);
         }
+
+        return $timeslot;
     }
 
-    public function toString()
+    public function toString(): string
     {
         $text = "";
         $text .= sprintf("%s - %s %s, ", $this->startTime, $this->endTime, $this->timeslotName);
@@ -51,13 +52,13 @@ class Timeslot
         return $text;
     }
 
-    public function toArray()
+    public function toJsonArray(): array
     {
 
         $speakerArray = array();
         foreach ($this->speaker as $speaker) {
 
-            array_push($speakerArray, $speaker->toArray());
+            array_push($speakerArray, $speaker->toJsonArray());
         }
 
         $array = array(

@@ -21,7 +21,13 @@ class Speaker
         }
         return $text .= $this->firstname . " " . $this->surname;
     }
-    public function toArray()
+
+    public static function SpeakerFromJson($speakerJson): Speaker
+    {
+        return new Speaker($speakerJson['title'], $speakerJson['firstname'], $speakerJson['surname']);;
+    }
+
+    public function toJsonArray(): array
     {
         $array = array(
             "title" => $this->title,

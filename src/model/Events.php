@@ -4,32 +4,28 @@ class Events
 {
     private $events = array();
 
-    public function build($events)
-    {
-        array_push($this->events = $events);
-    }
-
-    public function addEvent($event)
+    public function addEvent($event): void
     {
         array_push($this->events, $event);
     }
 
-    public function getEvents()
+    public function getEvents(): array
     {
         return $this->events;
     }
 
-    public function buildEventFromArray($eventArray)
+    public static function mapEventsFromJson($eventJson): Events
     {
-        foreach ($eventArray as $event) {
+        $events = new Events();
+        foreach ($eventJson as $event) {
 
-            $createdEvent = new Event($event['eventDate']);
-            $createdEvent->buildTimeslotFromArray($event['timeslots']);
-            array_push($this->events, $createdEvent);
+            $createdEvent = Event::EventFromJson($event);
+            $events->addEvent($createdEvent);
         }
+        return $events;
     }
 
-    public function toString()
+    public function toString(): string
     {
         $text = "";
         foreach ($this->events as $event) {
@@ -40,13 +36,13 @@ class Events
         return $text;
     }
 
-    public function toJson()
+    public function toJson(): array
     {
 
         $eventsArray = array();
         foreach ($this->events as $event) {
 
-            array_push($eventsArray, $event->toArray());
+            array_push($eventsArray, $event->toJsonArray());
         }
 
 

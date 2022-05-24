@@ -31,10 +31,9 @@ class IndexController extends Controller
 
     private function printIndex()
     {
-        $eventsFromRepository = $this->repository->read();
+        $eventsJson = $this->repository->read();
 
-        $events = new Events();
-        $events->buildEventFromArray($eventsFromRepository);
+        $events = Events::mapEventsFromJson($eventsJson);
 
         $eventCount = count($events->getEvents());
         if ($eventCount > 0) {
