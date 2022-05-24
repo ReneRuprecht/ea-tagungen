@@ -3,13 +3,11 @@
 class Speaker
 {
     public $title = "";
-    public $firstname = "";
     public $surname = "";
 
-    public function __construct($title, $firstname, $surname)
+    public function __construct($title, $surname)
     {
         $this->title = $title;
-        $this->firstname = $firstname;
         $this->surname = $surname;
     }
 
@@ -19,19 +17,18 @@ class Speaker
         if ($this->title != "") {
             $text .= $this->title . " ";
         }
-        return $text .= $this->firstname . " " . $this->surname;
+        return $text .= $this->surname;
     }
 
     public static function SpeakerFromJson($speakerJson): Speaker
     {
-        return new Speaker($speakerJson['title'], $speakerJson['firstname'], $speakerJson['surname']);;
+        return new Speaker($speakerJson['title'], $speakerJson['surname']);;
     }
 
     public function toArray(): array
     {
         $array = array(
             "title" => $this->title,
-            "firstname" => $this->firstname,
             "surname" => $this->surname
         );
         return $array;

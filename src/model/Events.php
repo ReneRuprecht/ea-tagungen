@@ -36,7 +36,7 @@ class Events
         return $text;
     }
 
-    public function toJson()
+    public function toArray()
     {
 
         $eventsArray = array();
@@ -45,7 +45,6 @@ class Events
             array_push($eventsArray, $event->toArray());
         }
 
-
-        return json_encode($eventsArray[0]);
+        return $eventsArray[0];
     }
 }

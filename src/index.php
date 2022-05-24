@@ -20,10 +20,10 @@ $controller->createView();
 
 $events = new Events();
 
-$event = new Event('new2 1event name');
+$event = new Event('26.09.2022');
 $timeslot = new Timeslot('09:00', '09:10', 'slotname1');
-$speaker = new Speaker('', 'firstname', 'surname');
-$speaker2 = new Speaker('dr.2', 'firstname2', 'surname2');
+$speaker = new Speaker('', 'surname');
+$speaker2 = new Speaker('dr.2', 'surname2');
 $timeslot->addSpeaker($speaker);
 $timeslot->addSpeaker($speaker2);
 $event->addTimeSlotEntry($timeslot);
@@ -32,5 +32,5 @@ $events->addEvent($event);
 
 
 
-//$repository->save($events->toJson());
+//$repository->save($events->toArray());
 //var_dump($repository->findAllDates());

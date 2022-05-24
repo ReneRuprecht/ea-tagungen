@@ -1,6 +1,6 @@
 [
     {
-        "eventDate": "new1 event name",
+        "eventDate": "25.09.2022",
         "timeslots": [
             {
                 "startTime": "09:00",
@@ -9,46 +9,10 @@
                 "speaker": [
                     {
                         "title": "",
-                        "firstname": "firstname",
                         "surname": "surname"
                     },
                     {
                         "title": "dr.2",
-                        "firstname": "firstname2",
-                        "surname": "surname2"
-                    }
-                ]
-            },
-            {
-                "startTime": "09:00",
-                "endTime": "09:10",
-                "eventName": "slotname1",
-                "speaker": [
-                    {
-                        "title": "",
-                        "firstname": "firstname",
-                        "surname": "surname"
-                    },
-                    {
-                        "title": "dr.2",
-                        "firstname": "firstname2",
-                        "surname": "surname2"
-                    }
-                ]
-            },
-            {
-                "startTime": "09:00",
-                "endTime": "09:10",
-                "eventName": "slotname1",
-                "speaker": [
-                    {
-                        "title": "",
-                        "firstname": "firstname",
-                        "surname": "surname"
-                    },
-                    {
-                        "title": "dr.2",
-                        "firstname": "firstname2",
                         "surname": "surname2"
                     }
                 ]
@@ -56,7 +20,7 @@
         ]
     },
     {
-        "eventDate": "new1 1event name",
+        "eventDate": "26.09.2022",
         "timeslots": [
             {
                 "startTime": "09:00",
@@ -65,29 +29,10 @@
                 "speaker": [
                     {
                         "title": "",
-                        "firstname": "firstname",
                         "surname": "surname"
                     },
                     {
                         "title": "dr.2",
-                        "firstname": "firstname2",
-                        "surname": "surname2"
-                    }
-                ]
-            },
-            {
-                "startTime": "09:00",
-                "endTime": "09:10",
-                "eventName": "slotname1",
-                "speaker": [
-                    {
-                        "title": "",
-                        "firstname": "firstname",
-                        "surname": "surname"
-                    },
-                    {
-                        "title": "dr.2",
-                        "firstname": "firstname2",
                         "surname": "surname2"
                     }
                 ]
