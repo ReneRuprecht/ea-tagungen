@@ -1,2 +1,2 @@
 <?php
-define("connectionString","./event.txt");
+define("connectionString","./events.txt");

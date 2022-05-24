@@ -13,6 +13,11 @@ class Timeslot
         $this->timeslotName = $timeslotName;
     }
 
+    public function setSpeakerArray($speaker)
+    {
+        $this->speaker = $speaker;
+    }
+
     public function getSpeaker()
     {
         return $this->speaker;
@@ -22,10 +27,18 @@ class Timeslot
         array_push($this->speaker, $speaker);
     }
 
+    public function buildSpeakerFromArray($speakerArray)
+    {
+        foreach ($speakerArray as $speaker) {
+            $createdSpeaker = new Speaker($speaker['title'], $speaker['firstname'], $speaker['surname']);
+            array_push($this->speaker, $createdSpeaker);
+        }
+    }
+
     public function toString()
     {
         $text = "";
-        $text .= sprintf("%s - %s %s ", $this->startTime, $this->endTime, $this->timeslotName);
+        $text .= sprintf("%s - %s %s, ", $this->startTime, $this->endTime, $this->timeslotName);
 
         for ($i = 0; $i < count($this->speaker); $i++) {
             $text .= sprintf("%s", $this->speaker[$i]->toString());
@@ -34,7 +47,7 @@ class Timeslot
                 $text .= " und ";
             }
         }
-
+        $text .= "<br>";
         return $text;
     }
 
@@ -50,7 +63,7 @@ class Timeslot
         $array = array(
             "startTime" => $this->startTime,
             "endTime" => $this->endTime,
-            "eventNane" => $this->timeslotName,
+            "eventName" => $this->timeslotName,
             "speaker" => $speakerArray
 
         );

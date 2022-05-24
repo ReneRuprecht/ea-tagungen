@@ -16,8 +16,8 @@ class Speaker
     public function toString(): string
     {
         $text = "";
-        if ($this->title == "") {
-            $text .= $this->title + " ";
+        if ($this->title != "") {
+            $text .= $this->title . " ";
         }
         return $text .= $this->firstname . " " . $this->surname;
     }

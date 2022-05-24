@@ -38,15 +38,13 @@ class JsonRepository implements RepositoryInterface
         }
 
         $this->logger->log("read from repo");
-        return $fileContent;
+        return json_decode($fileContent, true);
     }
 
     public function save($event)
     {
 
-        $fileContent = $this->read();
-
-        $fileJson = json_decode($fileContent, true);
+        $fileJson = $this->read();
 
         $found = false;
         foreach ($fileJson as $key => $value) {
