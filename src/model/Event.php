@@ -46,13 +46,13 @@ class Event
         return $text;
     }
 
-    public function toJsonArray(): array
+    public function toArray(): array
     {
 
         $timeslotArray = array();
         foreach ($this->timeslots as $timeslot) {
 
-            array_push($timeslotArray, $timeslot->toJsonArray());
+            array_push($timeslotArray, $timeslot->toArray());
         }
 
         $array = array(

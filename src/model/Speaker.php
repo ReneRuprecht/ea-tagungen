@@ -27,7 +27,7 @@ class Speaker
         return new Speaker($speakerJson['title'], $speakerJson['firstname'], $speakerJson['surname']);;
     }
 
-    public function toJsonArray(): array
+    public function toArray(): array
     {
         $array = array(
             "title" => $this->title,

@@ -52,13 +52,13 @@ class Timeslot
         return $text;
     }
 
-    public function toJsonArray(): array
+    public function toArray(): array
     {
 
         $speakerArray = array();
         foreach ($this->speaker as $speaker) {
 
-            array_push($speakerArray, $speaker->toJsonArray());
+            array_push($speakerArray, $speaker->toArray());
         }
 
         $array = array(

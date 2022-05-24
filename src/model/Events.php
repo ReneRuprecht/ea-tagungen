@@ -14,7 +14,7 @@ class Events
         return $this->events;
     }
 
-    public static function mapEventsFromJson($eventJson): Events
+    public static function EventsFromJson($eventJson): Events
     {
         $events = new Events();
         foreach ($eventJson as $event) {
@@ -36,16 +36,16 @@ class Events
         return $text;
     }
 
-    public function toJson(): array
+    public function toJson()
     {
 
         $eventsArray = array();
         foreach ($this->events as $event) {
 
-            array_push($eventsArray, $event->toJsonArray());
+            array_push($eventsArray, $event->toArray());
         }
 
 
-        return $eventsArray[0];
+        return json_encode($eventsArray[0]);
     }
 }

@@ -33,7 +33,7 @@ class IndexController extends Controller
     {
         $eventsJson = $this->repository->read();
 
-        $events = Events::mapEventsFromJson($eventsJson);
+        $events = Events::EventsFromJson($eventsJson);
 
         $eventCount = count($events->getEvents());
         if ($eventCount > 0) {
