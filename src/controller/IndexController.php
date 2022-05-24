@@ -13,8 +13,20 @@ class IndexController extends Controller
 
     public function createView()
     {
-        echo "<h1>basic index view </h1>";
+        $this->printHeading();
+
         $this->printIndex();
+    }
+
+    private function printHeading()
+    {
+        echo "
+        <h1>
+        Willkommen zum Tagungsprogramm
+        <br>
+        Agile Software Days in Emden
+        </h1>
+        ";
     }
 
     private function printIndex()
