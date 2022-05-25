@@ -41,26 +41,28 @@ class JsonRepository implements RepositoryInterface
         return json_decode($fileContent, true);
     }
 
-    public function save($event)
+    public function save($eventArray)
     {
 
         $fileJson = $this->read();
 
-        $found = false;
-        foreach ($fileJson as $key => $value) {
-            if ($value['eventDate'] == $event['eventDate']) {
-                array_push($fileJson[$key]['timeslots'], $event['timeslots'][0]);
-                $found = true;
-                break;
+        foreach ($eventArray as $event) {
+            $found = false;
+            foreach ($fileJson as $key => $value) {
+                if ($value['eventDate'] == $event['eventDate']) {
+                    array_push($fileJson[$key]['timeslots'], $event['timeslots'][0]);
+                    $found = true;
+                    break;
+                }
             }
+
+            if (!$found) {
+                array_push($fileJson, $event);
+            }
+
+            file_put_contents($this->file, json_encode($fileJson, JSON_PRETTY_PRINT));
         }
 
-        if (!$found) {
-            array_push($fileJson, $event);
-        }
-
-
-        file_put_contents($this->file, json_encode($fileJson, JSON_PRETTY_PRINT));
         $this->logger->log("event saved");
     }
 

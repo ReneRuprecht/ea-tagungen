@@ -45,6 +45,6 @@ class Events
             array_push($eventsArray, $event->toArray());
         }
 
-        return $eventsArray[0];
+        return $eventsArray;
     }
 }

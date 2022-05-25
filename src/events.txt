@@ -1,6 +1,6 @@
 [
     {
-        "eventDate": "25.09.2022",
+        "eventDate": "27.09.2022",
         "timeslots": [
             {
                 "startTime": "09:00",
@@ -16,12 +16,22 @@
                         "surname": "surname2"
                     }
                 ]
-            }
-        ]
-    },
-    {
-        "eventDate": "26.09.2022",
-        "timeslots": [
+            },
+            {
+                "startTime": "09:00",
+                "endTime": "09:10",
+                "eventName": "slotname1",
+                "speaker": [
+                    {
+                        "title": "",
+                        "surname": "surname"
+                    },
+                    {
+                        "title": "dr.2",
+                        "surname": "surname2"
+                    }
+                ]
+            },
             {
                 "startTime": "09:00",
                 "endTime": "09:10",
