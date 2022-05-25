@@ -1,49 +1,47 @@
 [
     {
-        "eventDate": "27.09.2022",
+        "eventDate": "2022-05-26",
         "timeslots": [
             {
-                "startTime": "09:00",
-                "endTime": "09:10",
-                "eventName": "slotname1",
+                "startTime": "08:00",
+                "endTime": "09:00",
+                "eventName": "vorlesung",
                 "speaker": [
                     {
-                        "title": "",
-                        "surname": "surname"
-                    },
-                    {
-                        "title": "dr.2",
-                        "surname": "surname2"
+                        "title": "dr.",
+                        "surname": "m\u00fcller"
                     }
                 ]
-            },
+            }
+        ]
+    },
+    {
+        "eventDate": "2022-05-27",
+        "timeslots": [
             {
-                "startTime": "09:00",
-                "endTime": "09:10",
-                "eventName": "slotname1",
+                "startTime": "10:00",
+                "endTime": "11:00",
+                "eventName": "vorlesung",
                 "speaker": [
                     {
-                        "title": "",
-                        "surname": "surname"
-                    },
-                    {
-                        "title": "dr.2",
-                        "surname": "surname2"
+                        "title": "prof. ",
+                        "surname": "muster"
                     }
                 ]
-            },
+            }
+        ]
+    },
+    {
+        "eventDate": "2022-05-30",
+        "timeslots": [
             {
-                "startTime": "09:00",
-                "endTime": "09:10",
-                "eventName": "slotname1",
+                "startTime": "08:00",
+                "endTime": "09:50",
+                "eventName": "vorlesung",
                 "speaker": [
                     {
-                        "title": "",
-                        "surname": "surname"
-                    },
-                    {
-                        "title": "dr.2",
-                        "surname": "surname2"
+                        "title": "prof. dr.",
+                        "surname": "muster"
                     }
                 ]
             }

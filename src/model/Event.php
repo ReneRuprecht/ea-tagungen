@@ -36,7 +36,7 @@ class Event
 
     public function toString(): string
     {
-        $text = "<h1>" . $this->eventDate . "</h1>";
+        $text = "<h4>Veranstaltungen am " . $this->eventDate . "</h4>";
 
         foreach ($this->timeslots as $timeslot) {
             $text .= $timeslot->toString();

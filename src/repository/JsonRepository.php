@@ -15,67 +15,51 @@ class JsonRepository implements RepositoryInterface
     {
         $this->file = $connectionString;
 
-        $fileContent = $this->read();
-        if ($fileContent == null || $fileContent == "") {
-            file_put_contents($this->file, "[]");
-        }
-
         $this->logger->log("conntected");
     }
 
-    public function read()
+    public function readFromRepository()
     {
 
         if (!file_exists($this->file)) {
             $this->logger->log("file not found");
-            return "";
+            file_put_contents($this->file, "[]");
+            return json_decode("[]", true);
         }
 
         $fileContent = file_get_contents($this->file);
 
-        if ($fileContent == null) {
-            return "";
+        if ($fileContent == null || $fileContent == "") {
+            file_put_contents($this->file, "[]");
+            return json_decode("[]", true);
         }
 
-        $this->logger->log("read from repo");
+        $this->logger->log("readFromRepository");
         return json_decode($fileContent, true);
     }
 
-    public function save($eventArray)
+    public function saveSingleEvent($singleEventArray)
     {
 
-        $fileJson = $this->read();
+        $fileJson = $this->readFromRepository();
 
-        foreach ($eventArray as $event) {
-            $found = false;
-            foreach ($fileJson as $key => $value) {
-                if ($value['eventDate'] == $event['eventDate']) {
-                    array_push($fileJson[$key]['timeslots'], $event['timeslots'][0]);
-                    $found = true;
-                    break;
+        $timeslotExists = false;
+        foreach ($fileJson as $key => $value) {
+            if ($value['eventDate'] == $singleEventArray['eventDate']) {
+                foreach ($singleEventArray['timeslots'] as $singleTimeSlot) {
+                    array_push($fileJson[$key]['timeslots'], $singleTimeSlot);
                 }
+                $timeslotExists = true;
+                break;
             }
-
-            if (!$found) {
-                array_push($fileJson, $event);
-            }
-
-            file_put_contents($this->file, json_encode($fileJson, JSON_PRETTY_PRINT));
         }
+
+        if (!$timeslotExists) {
+            array_push($fileJson, $singleEventArray);
+        }
+
+        file_put_contents($this->file, json_encode($fileJson, JSON_PRETTY_PRINT));
 
         $this->logger->log("event saved");
-    }
-
-    public function findAllDates()
-    {
-        $dates = array();
-        $fileContent = $this->read();
-        $fileJson = json_decode($fileContent, true);
-
-        foreach ($fileJson as $event) {
-            array_push($dates, $event['eventDate']);
-        }
-        $this->logger->log("dates loaded");
-        return $dates;
     }
 }

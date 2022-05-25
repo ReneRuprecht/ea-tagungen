@@ -13,6 +13,7 @@ class IndexController extends Controller
 
     public function createView()
     {
+        $this->printAddRedirectLink();
         $this->printHeading();
 
         $this->printIndex();
@@ -28,24 +29,40 @@ class IndexController extends Controller
         </h1>
         ";
     }
+    public function printAddRedirectLink()
+    {
+        $link = sprintf(
+            "%s://%s:%s%s",
+            isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
+            $_SERVER['SERVER_NAME'],
+            $_SERVER['SERVER_PORT'],
+            "/add.php"
+        );
+        echo "<a href='" . $link . "'>Wechsel zum hinzufügen von Events</a>";
+    }
 
     private function printIndex()
     {
-        $eventsJson = $this->repository->read();
 
+        $eventsJson = $this->repository->readFromRepository();
         $events = Events::EventsFromJson($eventsJson);
 
         $eventCount = count($events->getEvents());
+
         if ($eventCount > 0) {
 
             $text = "Die Tagung findet am ";
             for ($i = 0; $i < $eventCount; $i++) {
                 $text .= sprintf("%s", $events->getEvents()[$i]->getEventDate());
 
-                if ($i != $eventCount - 1) {
+                if ($i == $eventCount - 2) {
                     $text .= " und ";
                 }
+                else{
+                    $text .= ", ";
+                }
             }
+
             $text .= " im T-Foyer statt.";
 
             echo $text;

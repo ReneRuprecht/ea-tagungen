@@ -13,10 +13,6 @@ class Timeslot
         $this->timeslotName = $timeslotName;
     }
 
-    public function getAllSpeaker(): array
-    {
-        return $this->speaker;
-    }
     public function addSpeaker($speaker): void
     {
         array_push($this->speaker, $speaker);
@@ -38,7 +34,7 @@ class Timeslot
 
     public function toString(): string
     {
-        $text = "";
+        $text = "<p>";
         $text .= sprintf("%s - %s %s, ", $this->startTime, $this->endTime, $this->timeslotName);
 
         for ($i = 0; $i < count($this->speaker); $i++) {
@@ -48,7 +44,7 @@ class Timeslot
                 $text .= " und ";
             }
         }
-        $text .= "<br>";
+        $text .= "</p>";
         return $text;
     }
 
