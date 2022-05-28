@@ -1,11 +1,45 @@
 <?php
-class Timeslot
+include_once('BaseModel.php');
+/**
+ * Timeslot model class to hold the data for a single timeslot
+ */
+class Timeslot extends BaseModel
 {
+    /**
+     * startTime contains the startTime of the timeslot
+     *
+     * @var [string]
+     */
     private $startTime;
+
+    /**
+     * endTime contains the endTime of the timeslot
+     *
+     * @var [string]
+     */
     private $endTime;
+
+    /**
+     * timeslotName containts the name of the timeslot
+     *
+     * @var [string]
+     */
     private $timeslotName;
+
+    /**
+     * speaker contains the speaker of the timeslot as an array
+     *
+     * @var array
+     */
     private $speaker = array();
 
+    /**
+     * constructor that creates the timeslot with its informations
+     *
+     * @param [string] $startTime
+     * @param [string] $endTime
+     * @param [string] $timeslotName
+     */
     public function __construct($startTime, $endTime, $timeslotName)
     {
         $this->startTime = $startTime;
@@ -13,11 +47,12 @@ class Timeslot
         $this->timeslotName = $timeslotName;
     }
 
-    public function addSpeaker($speaker): void
-    {
-        array_push($this->speaker, $speaker);
-    }
-
+    /**
+     * TimeslotFromJson maps a timeslot from json to a timeslot object
+     *
+     * @param [json] $timeslotJson
+     * @return Timeslot
+     */
     public static function TimeslotFromJson($timeslotJson): Timeslot
     {
         $timeslot =  new Timeslot($timeslotJson['startTime'], $timeslotJson['endTime'], $timeslotJson['eventName']);
@@ -32,6 +67,22 @@ class Timeslot
         return $timeslot;
     }
 
+    /**
+     * addSpeaker adds a speaker to the speaker array
+     *
+     * @param [Speaker] $speaker
+     * @return void
+     */
+    public function addSpeaker($speaker): void
+    {
+        array_push($this->speaker, $speaker);
+    }
+
+    /**
+     * toString 
+     *
+     * @return string formatted timeslot data
+     */
     public function toString(): string
     {
         $text = "<p>";
@@ -40,17 +91,28 @@ class Timeslot
         for ($i = 0; $i < count($this->speaker); $i++) {
             $text .= sprintf("%s", $this->speaker[$i]->toString());
 
-            if ($i != count($this->speaker) - 1) {
+            if ($i == count($this->speaker) - 2) {
                 $text .= " und ";
+            } else {
+                $text .= ", ";
             }
         }
         $text .= "</p>";
         return $text;
     }
 
+    /**
+     * toArray builds an array from the timeslot instance
+     *
+     * @return array timeslot as array
+     */
     public function toArray(): array
     {
 
+        /* 
+        *a new array needs to be created because the fiels are private of the
+        * speaker.
+        */
         $speakerArray = array();
         foreach ($this->speaker as $speaker) {
 

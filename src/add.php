@@ -1,14 +1,16 @@
 <?php
-
 include_once('./controller/AddController.php');
-include_once('./utils/Logger.php');
 include_once('./repository/JsonRepository.php');
 include_once('./constants/Constants.php');
+include_once('./utils/FormValidator.php');
 
+// creates the repository
+$repository = new JsonRepository();
 
-$logger = new Logger();
-$repository = new JsonRepository($logger);
-$repository->connect(connectionString);
+// creates the form validator
+$formValidator = new FormValidator();
 
-$controller = new AddController($repository);
+// creates the controller with repository and form validator
+$controller = new AddController($repository, $formValidator);
+// calls the create view
 $controller->createView();

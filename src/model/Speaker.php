@@ -1,16 +1,55 @@
 <?php
+include_once('BaseModel.php');
 
-class Speaker
+/**
+ * Speaker model class to hold the data for a single speaker
+ */
+class Speaker extends BaseModel
 {
-    public $title = "";
-    public $surname = "";
 
+    /**
+     * title contains the title of the speaker if there is one
+     *
+     * @var string
+     */
+    private $title = "";
+
+    /**
+     * surname contains the surname of the speaker
+     *
+     * @var string
+     */
+
+    private $surname = "";
+
+    /**
+     * constructor that creates the speaker with its informations
+     *
+     * @param [stirng] $title
+     * @param [string] $surname
+     */
     public function __construct($title, $surname)
     {
         $this->title = $title;
         $this->surname = $surname;
     }
 
+    /**
+     * SpeakerFromJson maps a speaker from json to a speaker object
+     *
+     * @param [json] $speakerJson
+     * @return Speaker
+     */
+    public static function SpeakerFromJson($speakerJson): Speaker
+    {
+        return new Speaker($speakerJson['title'], $speakerJson['surname']);;
+    }
+
+    /**
+     * toString 
+     *
+     * @return string formatted speaker data
+     */
     public function toString(): string
     {
         $text = "";
@@ -20,11 +59,11 @@ class Speaker
         return $text .= $this->surname;
     }
 
-    public static function SpeakerFromJson($speakerJson): Speaker
-    {
-        return new Speaker($speakerJson['title'], $speakerJson['surname']);;
-    }
-
+    /**
+     * toArray builds an array from the speaker instance
+     *
+     * @return array speaker as array
+     */
     public function toArray(): array
     {
         $array = array(

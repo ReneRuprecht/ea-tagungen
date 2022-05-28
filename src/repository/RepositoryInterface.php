@@ -1,9 +1,31 @@
 <?php
 
+/**
+ * RepositoryInterface  handles the connection as well as read and saving of
+ * data
+ */
 interface RepositoryInterface
 {
-    public function __construct($logger);
+    /**
+     * connect, connects to the storage
+     *
+     * @param [string] $connectionString
+     * @return void
+     */
     public function connect($connectionString);
-    public function readFromRepository();
+
+    /**
+     * readFromRepository reads the data from the storage
+     *
+     * @return array event
+     */
+    public function readFromRepository(): array;
+
+    /**
+     * saveSingleEvent saves the single event to the storage
+     *
+     * @param [Event] $singleEventArray
+     * @return void
+     */
     public function saveSingleEvent($singleEventArray);
 }

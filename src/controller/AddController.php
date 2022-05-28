@@ -1,57 +1,104 @@
 <?php
-include_once('Controller.php');
+include_once('BaseController.php');
 include_once('./model/Speaker.php');
 include_once('./model/Timeslot.php');
 include_once('./model/Event.php');
-include_once('./model/Events.php');
-class AddController extends Controller
+
+/**
+ * Class AddController handles the controlling part of the add page
+ */
+class AddController extends BaseController
 {
 
+    /**
+     * repository is used to save and read event data from json and gets
+     * injected from the constructor
+     *
+     * @var [RepositoryInterface]
+     */
     private $repository;
 
-    public function __construct($repository)
+    /**
+     * formValidator is used to validate the form and gets injected from the
+     * constructor
+     *
+     * @var [ValidatorInterface]
+     */
+    private $formValidator;
+
+    /**
+     * Contstructor starts a session for the input form
+     *
+     * @param [RepositoryInterface] $repository
+     * @param [ValidatorInterface] $formValidator
+     */
+    public function __construct($repository, $formValidator)
     {
         session_start();
+
         $this->repository = $repository;
+        // connects the application to the repository
+        $this->repository->connect(connectionString);
+
+        $this->formValidator = $formValidator;
     }
 
+    /**
+     * printIndexRedirectLink prints the link to the index page
+     *
+     * @return void
+     */
     public function printIndexRedirectLink()
     {
-        $link = sprintf(
-            "%s://%s:%s%s",
-            isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
-            $_SERVER['SERVER_NAME'],
-            $_SERVER['SERVER_PORT'],
-            "/index.php"
-        );
-        echo "<a href='" . $link . "'>Zurück zur Übersicht</a>";
+        echo '<a href="'.indexPage.'">Index Page</a>';
     }
 
+    /**
+     * createView is the start function to display the page ,check if the form
+     * is valid and save the form 
+     *
+     * @return void
+     */
     public function createView(): void
     {
         $this->printIndexRedirectLink();
-
 
         $this->printHeading();
 
         $this->printForm();
 
+        // if there is no form submitted, the function can stop here
+        if (!isset($_POST['formCreateEvent']))  return;
 
-        if (isset($_POST['formCreateEvent']) && $this->isFormValid()) {
-            $this->saveEvent();
-            echo "<h1>Event wurde angelegt</h1>";
+        // validate form an get the return value
+        $errorMessage = $this->formValidator->validate();
+
+        // display the error message if there is one
+        if ($errorMessage != "") {
+            echo $errorMessage;
+            return;
         }
+
+        // the form was valid, prepare the event data for saving
+        $preparedEvent = $this->prepareEventForSaving();
+
+        // saves the event
+        $this->repository->saveSingleEvent($preparedEvent);
+
+        echo "<h1>Event wurde angelegt</h1>";
     }
 
-    private function saveEvent(): void
+    /**
+     * prepareEventForSaving is used to prepare the event for saving and saves
+     * it
+     *
+     * @return array prepared event array to save in the repository
+     */
+    private function prepareEventForSaving(): array
     {
-        $eventDate = filter_var(
-            $_POST['eventDate'],
-            FILTER_SANITIZE_FULL_SPECIAL_CHARS
-        );
+        $eventDate = $_POST['eventDate'];
 
         $event = new Event($eventDate);
-
 
         $eventName = $_POST['eventName'];
         $startTime = $_POST['startTime'];
@@ -59,44 +106,55 @@ class AddController extends Controller
 
         $timeslot = new Timeslot($startTime, $endTime, $eventName);
 
-
         $speaker = $_POST['speaker'];
 
-
-
+        // check if there are multiple speaker in the textfield
         if (strpos($speaker, ',')) {
             $explodedSpeakerArray = explode(',', $speaker);
-            foreach ($explodedSpeakerArray as $speakerElement) {
-                $timeslot->addSpeaker($this->createSpeakerFromString($speakerElement));
+            foreach ($explodedSpeakerArray as $speakerString) {
+
+                $timeslot->addSpeaker($this->createSpeakerFromString($speakerString));
             }
         } else {
             $timeslot->addSpeaker($this->createSpeakerFromString($speaker));
         }
 
         $event->addTimeSlotEntry($timeslot);
-        $events = new Events();
-        $events->addEvent($event);
 
-        $this->repository->saveSingleEvent($event->toArray());
+        return $event->toArray();
     }
 
-
-    private function createSpeakerFromString($speakerElement): Speaker
+    /**
+     * createSpeakerFromString builds the speaker object
+     *
+     * @param [string] $speakerString
+     * @return Speaker
+     */
+    private function createSpeakerFromString($speakerString): Speaker
     {
 
-        if (preg_match(speakerRegex, $speakerElement, $matches)) {
+        // is always true. the regex gets checked in the validation
+        if (preg_match(speakerRegex, $speakerString, $matches)) {
             $speakerTitle = "";
 
+            // adds the prof. part to the speakerTitle
             $matches[1] != "" ? $speakerTitle .= $matches[1] : "";
 
+            // adds the dr. part to the speakerTitle
             ($speakerTitle && $matches[1]) != "" ? $speakerTitle .= " " . $matches[2] : $speakerTitle .= $matches[2];
 
-
+            // setts the speaker surname
             $speakerSurname = $matches[3];
+
             return new Speaker($speakerTitle, $speakerSurname);
         }
     }
 
+    /**
+     * printHeading shows the heading of the page
+     *
+     * @return void
+     */
     private function printHeading(): void
     {
         echo "
@@ -106,51 +164,12 @@ class AddController extends Controller
         ";
     }
 
-    private function isFormValid(): bool
-    {
-        if (!isset($_POST['eventDate']) || !preg_match(eventDateRegex, $_POST['eventDate'])) {
-            echo "<h1>Das Datum ist ungültig</h1>";
-            return false;
-        }
 
-        if (!isset($_POST['eventName']) || !preg_match('/^(?!\s*$).+/', $_POST['eventName'])) {
-            echo "<h1>Der Eventname ist ungültig</h1>";
-            return false;
-        }
-
-        if (!isset($_POST['startTime']) || !preg_match(timeRegex, $_POST['startTime'])) {
-            echo "<h1>Die Startzeit ist ungültig</h1>";
-            return false;
-        }
-        if (!isset($_POST['endTime']) || !preg_match(timeRegex, $_POST['endTime'])) {
-            echo "<h1>Die Endzeit ist ungültig</h1>";
-            return false;
-        }
-
-        if (!isset($_POST['speaker'])) {
-            echo "<h1>Die Redner ist ungültig</h1>";
-            return false;
-        } else {
-            if (strpos($_POST['speaker'], ',')) {
-                $explodedSpeakerArray = explode(',', $_POST['speaker']);
-                foreach ($explodedSpeakerArray as $speakerElement) {
-
-                    if (!preg_match(speakerRegex, $speakerElement)) {
-                        echo "<h1>Die Redner ist ungültig</h1>";
-                        return false;
-                    }
-                }
-            } else {
-                if (!preg_match(speakerRegex, $_POST['speaker'])) {
-                    echo "<h1>Die Redner ist ungültig</h1>";
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
+    /**
+     * printForm shows the form that is used to get the input from the user
+     *
+     * @return void
+     */
     private function printForm(): void
     {
 
@@ -186,7 +205,7 @@ class AddController extends Controller
                 <label for=\"endTime\">End Zeit:</label>
                 <input type=\"time\" name=\"endTime\" value=\"$endTime\"/>
                 <br>
-                <label for=\"speaker\">Sprecher:</label>
+                <label for=\"speaker\">Sprecher (mehrere Sprecher sind mit einem Komma ',' zu separieren):</label>
                 <input type=\"text\" name=\"speaker\" value=\"$speaker\"/>
                 <br>
                 <input type=\"submit\" name=\"formCreateEvent\" value=\"abschicken\"/>
