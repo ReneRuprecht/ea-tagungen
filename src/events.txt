@@ -121,6 +121,17 @@
                         "surname": "testtt"
                     }
                 ]
+            },
+            {
+                "startTime": "00:00",
+                "endTime": "00:00",
+                "eventName": "test",
+                "speaker": [
+                    {
+                        "title": "",
+                        "surname": "redner"
+                    }
+                ]
             }
         ]
     }
