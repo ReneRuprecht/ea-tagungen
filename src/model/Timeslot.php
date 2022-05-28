@@ -88,14 +88,13 @@ class Timeslot extends BaseModel
         $text = "<p>";
         $text .= sprintf("%s - %s %s, ", $this->startTime, $this->endTime, $this->timeslotName);
 
-        var_dump(count($this->speaker));
-
         $text .= sprintf("%s", $this->speaker[0]->toString());
 
         if (count($this->speaker) > 0) {
             for ($i = 1; $i < count($this->speaker); $i++) {
                 $text .= sprintf(", %s", $this->speaker[$i]->toString());
 
+                // appends the speaker to the string
                 if ($i == count($this->speaker) - 2) {
                     $text .= sprintf(" und %s", $this->speaker[$i]->toString());
                     break;
