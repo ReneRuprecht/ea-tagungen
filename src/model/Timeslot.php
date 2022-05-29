@@ -98,7 +98,7 @@ class Timeslot extends BaseModel
 
                 // appends the speaker to the string
                 if ($i == count($this->speaker) - 2) {
-                    $text .= sprintf(" und %s", $this->speaker[$i]->toString());
+                    $text .= sprintf(" und %s", $this->speaker[$i+1]->toString());
                     break;
                 }
             }
