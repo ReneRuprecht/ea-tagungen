@@ -52,12 +52,12 @@ class Event extends BaseModel
     }
 
     /**
-     * EventFromJson maps an event from json to an event object
+     * eventFromJson maps an event from json to an event object
      *
      * @param [json] $eventJson
      * @return Event
      */
-    public static function EventFromJson($eventJson): Event
+    public static function eventFromJson($eventJson): Event
     {
 
         $event = new Event($eventJson['eventDate']);

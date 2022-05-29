@@ -10,7 +10,7 @@ abstract class BaseController
      *
      * @return void
      */
-    public function createView()
+    public function createView(): void
     {
         echo "<h1>basic view </h1>";
     }

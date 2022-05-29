@@ -18,7 +18,7 @@ class JsonRepository implements RepositoryInterface
      * @param [string] $connectionString
      * @return void
      */
-    public function connect($connectionString)
+    public function connect($connectionString):void 
     {
         $this->file = $connectionString;
     }
@@ -55,7 +55,7 @@ class JsonRepository implements RepositoryInterface
      * @param [Event] $singleEventArray
      * @return void
      */
-    public function saveSingleEvent($singleEventArray)
+    public function saveSingleEvent($singleEventArray):void
     {
 
         $fileJson = $this->readFromRepository();        

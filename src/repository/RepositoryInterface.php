@@ -12,7 +12,7 @@ interface RepositoryInterface
      * @param [string] $connectionString
      * @return void
      */
-    public function connect($connectionString);
+    public function connect($connectionString): void;
 
     /**
      * readFromRepository reads the data from the storage
@@ -27,5 +27,5 @@ interface RepositoryInterface
      * @param [Event] $singleEventArray
      * @return void
      */
-    public function saveSingleEvent($singleEventArray);
+    public function saveSingleEvent($singleEventArray): void;
 }

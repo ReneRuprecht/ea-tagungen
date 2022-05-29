@@ -32,7 +32,7 @@ class IndexController extends BaseController
      *
      * @return void
      */
-    public function createView()
+    public function createView(): void
     {
         $this->printAddRedirectLink();
 

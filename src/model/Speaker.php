@@ -35,12 +35,12 @@ class Speaker extends BaseModel
     }
 
     /**
-     * SpeakerFromJson maps a speaker from json to a speaker object
+     * speakerFromJson maps a speaker from json to a speaker object
      *
      * @param [json] $speakerJson
      * @return Speaker
      */
-    public static function SpeakerFromJson($speakerJson): Speaker
+    public static function speakerFromJson($speakerJson): Speaker
     {
         return new Speaker($speakerJson['title'], $speakerJson['surname']);;
     }

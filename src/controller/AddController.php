@@ -48,7 +48,7 @@ class AddController extends BaseController
      *
      * @return void
      */
-    public function printIndexRedirectLink()
+    public function printIndexRedirectLink(): void
     {
         echo '<a href="'.indexPage.'">Index Page</a>';
     }

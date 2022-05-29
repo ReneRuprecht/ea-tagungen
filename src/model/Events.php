@@ -34,13 +34,13 @@ class Events extends BaseModel
     }
 
     /**
-     * EventsFromJson builds all of the single events and the necessary parts
+     * eventsFromJson builds all of the single events and the necessary parts
      * from the json content.. returns the finished events object
      *
      * @param [type] $eventJson
      * @return Events
      */
-    public static function EventsFromJson($eventJson): Events
+    public static function eventsFromJson($eventJson): Events
     {
         $events = new Events();
 
