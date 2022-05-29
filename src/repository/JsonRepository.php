@@ -33,8 +33,8 @@ class JsonRepository implements RepositoryInterface
 
         // if the file doesn't exist, the file get created
         if (!file_exists($this->file)) {
-            file_put_contents($this->file, "[]");
-            return json_decode("[]", true);
+            file_put_contents($this->file, defaultJson);
+            return json_decode(defaultJson, true);
         }
 
         // reads data from file
@@ -42,8 +42,8 @@ class JsonRepository implements RepositoryInterface
 
         // puts an empty array into file
         if ($fileContent == null || $fileContent == "") {
-            file_put_contents($this->file, "[]");
-            return json_decode("[]", true);
+            file_put_contents($this->file, defaultJson);
+            return json_decode(defaultJson, true);
         }
 
         return json_decode($fileContent, true);
@@ -58,7 +58,7 @@ class JsonRepository implements RepositoryInterface
     public function saveSingleEvent($singleEventArray)
     {
 
-        $fileJson = $this->readFromRepository();
+        $fileJson = $this->readFromRepository();        
 
         // get set to true if the timeslot already exist
         $timeslotExists = false;
@@ -68,11 +68,11 @@ class JsonRepository implements RepositoryInterface
         * add the timeslot, the loop breaks if there is no event to add the new
         * timeslot, the timeslotExists stays false
          */
-        foreach ($fileJson as $key => $value) {
+        foreach ($fileJson['events'] as $key => $value) {
             if ($value['eventDate'] == $singleEventArray['eventDate']) {
                 foreach ($singleEventArray['timeslots'] as $singleTimeSlot) {
                     // adds the new event timeslot to the existing timeslot
-                    array_push($fileJson[$key]['timeslots'], $singleTimeSlot);
+                    array_push($fileJson['events'][$key]['timeslots'], $singleTimeSlot);
                 }
                 // timeslot exists already
                 $timeslotExists = true;
@@ -85,7 +85,7 @@ class JsonRepository implements RepositoryInterface
         * before
         */
         if (!$timeslotExists) {
-            array_push($fileJson, $singleEventArray);
+            array_push($fileJson['events'], $singleEventArray);
         }
 
         // saves the data into the file

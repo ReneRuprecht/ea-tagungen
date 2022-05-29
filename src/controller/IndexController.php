@@ -36,26 +36,9 @@ class IndexController extends BaseController
     {
         $this->printAddRedirectLink();
 
-        $this->printHeading();
-
         $this->showPage();
     }
 
-    /**
-     * printHeading shows the heading of the page
-     *
-     * @return void
-     */
-    private function printHeading()
-    {
-        echo "
-        <h1>
-        Willkommen zum Tagungsprogramm
-        <br>
-        Agile Software Days in Emden
-        </h1>
-        ";
-    }
 
     /**
      * printAddRedirectLink prints the link to the add page
@@ -76,8 +59,18 @@ class IndexController extends BaseController
     {
 
         // loads the json from the repository
-        $eventsJson = $this->repository->readFromRepository();
-        // builds the events from the json content
+        $fileJson = $this->repository->readFromRepository();
+
+        $greetingText = $fileJson['greetingText'];
+
+        echo "<h1>" . $greetingText . "</h1>";
+
+        $eventsJson = $fileJson['events'];
+       
+        // if there are no events, it can stop here
+        if (!count($eventsJson) > 0) return;
+
+         // builds the events from the json content
         $events = Events::EventsFromJson($eventsJson);
         // counts the events that got created
         $eventCount = count($events->getEvents());
