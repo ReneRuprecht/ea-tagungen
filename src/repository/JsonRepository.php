@@ -2,6 +2,8 @@
 include_once('RepositoryInterface.php');
 /**
  * JsonRepository  class to get the data from the json file
+ * 
+ * @author ReneRuprecht
  */
 class JsonRepository implements RepositoryInterface
 {

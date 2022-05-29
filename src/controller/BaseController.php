@@ -2,6 +2,8 @@
 
 /**
  * BaseController is used as a basic controller to extend from
+ * 
+ * @author ReneRuprecht
  */
 abstract class BaseController
 {

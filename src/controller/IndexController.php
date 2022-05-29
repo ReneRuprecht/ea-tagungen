@@ -1,7 +1,9 @@
 <?php
 include_once('BaseController.php');
 /**
- * Class IndexController handles the displaying part of the index page
+ * IndexController handles the displaying part of the index page
+ * 
+ * @author ReneRuprecht
  */
 class IndexController extends BaseController
 {

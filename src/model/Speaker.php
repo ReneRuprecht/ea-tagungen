@@ -3,6 +3,8 @@ include_once('BaseModel.php');
 
 /**
  * Speaker model class to hold the data for a single speaker
+ * 
+ * @author ReneRuprecht
  */
 class Speaker extends BaseModel
 {

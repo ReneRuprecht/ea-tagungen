@@ -2,6 +2,8 @@
 
 /**
  * BaseModel is used as a basic model to extend from
+ * 
+ * @author ReneRuprecht
  */
 abstract class BaseModel
 {

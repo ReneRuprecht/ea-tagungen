@@ -2,6 +2,8 @@
 include_once('BaseModel.php');
 /**
  * Events handles the whole single events
+ * 
+ * @author ReneRuprecht
  */
 class Events extends BaseModel
 {

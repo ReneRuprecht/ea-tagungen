@@ -2,6 +2,8 @@
 include_once('BaseModel.php');
 /**
  * Timeslot model class to hold the data for a single timeslot
+ * 
+ * @author ReneRuprecht
  */
 class Timeslot extends BaseModel
 {

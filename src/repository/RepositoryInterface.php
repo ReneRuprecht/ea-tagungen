@@ -3,6 +3,8 @@
 /**
  * RepositoryInterface  handles the connection as well as read and saving of
  * data
+ * 
+ * @author ReneRuprecht
  */
 interface RepositoryInterface
 {

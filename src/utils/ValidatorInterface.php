@@ -2,6 +2,8 @@
 
 /**
  * Validator, is used to implement
+ * 
+ * @author ReneRuprecht
  */
 interface Validator
 {

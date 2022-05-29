@@ -2,6 +2,8 @@
 include_once('ValidatorInterface.php');
 /**
  * FormValidator, is used to validate the form
+ * 
+ * @author ReneRuprecht
  */
 class FormValidator implements Validator
 {

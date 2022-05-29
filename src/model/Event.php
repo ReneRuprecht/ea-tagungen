@@ -3,6 +3,8 @@ include_once('BaseModel.php');
 
 /**
  * Event model class to hold the data for a single event
+ * 
+ * @author ReneRuprecht
  */
 class Event extends BaseModel
 {

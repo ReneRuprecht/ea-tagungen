@@ -6,6 +6,8 @@ include_once('./model/Event.php');
 
 /**
  * Class AddController handles the controlling part of the add page
+ * 
+ * @author ReneRuprecht
  */
 class AddController extends BaseController
 {
